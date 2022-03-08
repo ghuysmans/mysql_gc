@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           name: Setup MariaDB
-          command: "sudo apt-get install mariadb-server libmariadb-dev-compat"
+          command: "sudo apt-get install -y mariadb-server libmariadb-dev-compat"
       - run:
           name: Install mysql
-          command: "opam install mysql"
+          command: "opam install -y mysql"
       - run:
           name: Build
           command: "opam exec -- ocamlfind ocamlc -package mysql test.ml -linkpkg"
