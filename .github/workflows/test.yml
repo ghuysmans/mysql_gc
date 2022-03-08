@@ -26,4 +26,4 @@ jobs:
       - run: sudo apt-get install libmariadb-dev-compat
       - run: opam install mysql
       - run: opam exec -- ocamlfind ocamlc -package mysql test.ml -linkpkg
-      - run: ./a.out
+      - run: opam exec -- ./a.out
