@@ -5,22 +5,27 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  test:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: ocaml/opam2:4.13
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Setup MariaDB
+          command: "sudo apt-get install mariadb-server libmariadb-dev-compat"
+      - run:
+          name: Install mysql
+          command: "opam install mysql"
+      - run:
+          name: Build
+          command: "opam exec -- ocamlfind ocamlc -package mysql test.ml -linkpkg"
+      - run:
+          name: Test
+          command: "opam exec -- ./a.out"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  test:
     jobs:
-      - say-hello
+      - test
