@@ -1,0 +1,7 @@
+(rule
+ (targets scan.ml)
+ (deps scan.sql)
+ (action
+  (with-stdout-to %{targets}
+  (run sqlgg -gen caml %{deps}))))
+(executables (names original mini) (libraries sqlgg.mysql))
