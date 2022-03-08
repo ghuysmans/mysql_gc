@@ -20,6 +20,9 @@ jobs:
           name: Build
           command: "opam exec -- ocamlfind ocamlc -package mysql test.ml -linkpkg"
       - run:
+          name: Start MariaDB
+          command: "sudo service mariadb start"
+      - run:
           name: Test
           command: "opam exec -- ./a.out"
 
