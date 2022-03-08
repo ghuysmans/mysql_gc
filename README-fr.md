@@ -8,6 +8,7 @@ Segmentation fault (core dumped)
 ```
 
 Environnement :
+- Linux 4.19.101, **32 bits**
 - [NixOS](https://nixos.org) 19.09.2008.ea553d8c67c
 - [MariaDB](https://mariadb.org) 10.3.18
 - [OCaml](https://ocaml.org) 4.06.1
@@ -285,3 +286,11 @@ Il y a plusieurs approches :
 2. Stocker globalement une `ref`.
 ### Ramassage préventif
 On peut forcer un ramassage en appelant `Gc.minor` dans _main_.
+
+## Tests d'intégration
+### GitHub Actions
+GitHub Actions repose sur un _runner_ implémenté avec .NET Core.
+Cette plateforme n'est pas compatible avec GNU/Linux 32 bits.
+
+En 64 bits, [il n'y a aucun problème](https://github.com/ghuysmans/mysql_gc/actions) !
+C'est peut-être la raison pour laquelle on n'a pas remarqué ce bug plus tôt.
