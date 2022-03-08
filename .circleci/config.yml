@@ -23,6 +23,9 @@ jobs:
           name: Start MariaDB
           command: "sudo service mariadb start"
       - run:
+          name: Configure MariaDB
+          command: "sudo mysqladmin -proot password '' && sudo mysql -e \"CREATE USER '$USER'@'localhost' IDENTIFIED BY ''\" && sudo mysql -e \"GRANT ALL PRIVILEGES ON *.* TO '$USER'@'localhost'\" && sudo mysql -e \"FLUSH PRIVILEGES\""
+      - run:
           name: Test
           command: "opam exec -- ./a.out"
 
