@@ -1,5 +1,6 @@
 _build/
 .merlin
+a.out
 
 mariadb-connector-c-3.1.5-src/
 result

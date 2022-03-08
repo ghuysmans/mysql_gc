@@ -1,0 +1,29 @@
+name: Test
+on: push
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          #- windows
+        ocaml-version:
+          - 4.06.1
+          - 4.10.0
+          - 4.13.0
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+      - uses: ankane/setup-mariadb@v1
+        with:
+          mariadb-version: 10.6
+      - run: sudo apt-get install libmariadb-dev
+      - run: opam install mysql
+      - run: opam exec -- ocamlfind ocamlc -package mysql test.ml -linkpkg
+      - run: ./a.out
